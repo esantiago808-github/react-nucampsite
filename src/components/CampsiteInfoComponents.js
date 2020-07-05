@@ -25,8 +25,8 @@ class CampsiteInfo extends Component {
 						return (
 							<div>
 								<p>
-									{comment.text}
-									{comment.author},{" "}
+									{comment.text} <br/>
+									--{comment.author},{" "}
 									{new Intl.DateTimeFormat("en-US", {
 										year: "numeric",
 										month: "short",
@@ -54,7 +54,7 @@ class CampsiteInfo extends Component {
                     */}
 
 					{this.renderCampsite(this.props.campsite)}
-					{this.renderComment(this.props.comment)}
+					{this.renderComments(this.props.campsite.comments)}
 
 					{/* AMY INSTRUCTOR: call your renderComment here  */}
 				</div>
