@@ -53,7 +53,8 @@ class CampsiteInfo extends Component {
                         {this.renderCampsite(this.props.campsite)}
                     */}
 
-					<renderCampsite campsite={this.props.renderCampsite} />
+					{this.renderCampsite(this.props.campsite)}
+					{this.renderComment(this.props.comment)}
 
 					{/* AMY INSTRUCTOR: call your renderComment here  */}
 				</div>
