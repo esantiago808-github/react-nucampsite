@@ -17,6 +17,28 @@ class CampsiteInfo extends Component {
         );
     }
 
+    renderComments(comments) {
+        if(comments)
+            return (
+                <div className="col-md-5 m-1">
+                    <h4>Comments</h4>
+                    {comments.map(comment => {
+                        return(
+                            <div>
+                                <p>
+                                    {comment.text}
+                                    {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} 
+                                </p>
+                            </div>
+                        );
+                    }) 
+                    }
+                </div>
+            );
+            
+        return <div />;
+    }
+
     render () {
         if (this.props.campsite) {
             return (
