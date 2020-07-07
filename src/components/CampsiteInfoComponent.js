@@ -45,23 +45,14 @@ class CampsiteInfo extends Component {
 	render() {
 		if (this.props.campsite) {
 			return (
-				<div className='row'>
-					{/* AMY INSTRUCTOR: renderCampsite() is not a component, it's a function. 
-                        the only time a function is a component, is when it is outside of the class component. 
-
-                        replace your code at line 56 with this:
-                        {this.renderCampsite(this.props.campsite)}
-                    */}
-
-					{this.renderCampsite(this.props.campsite)}
-					{this.renderComments(this.props.campsite.comments)}
-
-					{/* AMY INSTRUCTOR: call your renderComment here  */}
+				<div className="container">
+					<div className='row'>
+						{this.renderCampsite(this.props.campsite)}
+						{this.renderComments(this.props.campsite.comments)}
+					</div>
 				</div>
 			);
 		}
-
-		// AMY INSTRUCTOR: you had your closing curly brace in the wrong spot. I fixed it for you to have it working.
 		return <div />;
 	}
 }
