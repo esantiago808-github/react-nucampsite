@@ -65,7 +65,7 @@ class Contact extends Component {
         }
 
         if (this.state.touched.email && !email.includes('@')) {
-            errors.email = 'Emails hould contain a @';
+            errors.email = 'Email should contain a @';
         }
 
         return errors;
