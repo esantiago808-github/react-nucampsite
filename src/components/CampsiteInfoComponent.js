@@ -84,23 +84,14 @@ function CampsiteInfo(props) {
 	return <div />;
 }
 
-// AMY INSTRUCTOR: delete required(). not necessary.
-const required = (val) => val && val.length;
-
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
-
-// AMY INSTRUCTOR: delete rating, author, and text from the state object.
-// not necessary because react-redux-form is managing the form.
 
 class CommentForm extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			rating: "",
-			author: "",
-			text: "",
 			isModalOpen: false,
 		};
 
@@ -119,35 +110,14 @@ class CommentForm extends Component {
 		alert("Current state is: " + JSON.stringify(values));
 	}
 
-	// AMY INSTRUCTOR: delete validate() function.
-	// not necessary because react-redux-form is managing the form.
-	validate(author) {
-		const errors = {
-			author: "",
-		};
-
-		if (author.length < 2) {
-			errors.author = "Your name must be at least 2 characters.";
-		} else if (author.length > 15) {
-			errors.author = "Your name must be 15 or less characters.";
-		}
-		return errors;
-	}
-
 	render() {
-		// AMY INSTRUCTOR: delete errors.
-		// not necessary because react-redux-form is managing the form.
-		const errors = this.validate(this.state.author);
-
 		return (
 			<React.Fragment>
 				<Button outline onClick={this.toggleModal}>
 					<i className='fa fa-pencil fa-lg' /> Submit Comment
 				</Button>
 				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-					{/* AMY INSTRUCTOR: delete isOpen. Only the Modal requires it. */}
 					<ModalHeader
-						isOpen={this.state.isModalOpen}
 						toggle={this.toggleModal}>
 						Submit Comment
 					</ModalHeader>
