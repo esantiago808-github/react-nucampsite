@@ -1,14 +1,26 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Label } from "reactstrap";
-import { Link } from 'react-router-dom';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import {
+	Card,
+	CardImg,
+	CardText,
+	CardBody,
+	Breadcrumb,
+	BreadcrumbItem,
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	Label,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import { Control, LocalForm, Errors } from "react-redux-form";
 
-function RenderCampsite({campsite}) {
+function RenderCampsite({ campsite }) {
 	return (
 		<div className='col-md-5 m-1'>
 			<Card>
 				<CardImg top src={campsite.image} alt={campsite.name} />
-				<CardBody>					
+				<CardBody>
 					<CardText>{campsite.description}</CardText>
 				</CardBody>
 			</Card>
@@ -16,17 +28,17 @@ function RenderCampsite({campsite}) {
 	);
 }
 
-function RenderComments({comments}) {
+function RenderComments({ comments }) {
 	if (comments)
 		return (
-			<React.Fragment> 
+			<React.Fragment>
 				<div className='col-md-5 m-1'>
 					<h4>Comments</h4>
 					{comments.map((comment) => {
 						return (
 							<div>
 								<p>
-									{comment.text} <br/>
+									{comment.text} <br />
 									--{comment.author},{" "}
 									{new Intl.DateTimeFormat("en-US", {
 										year: "numeric",
@@ -46,23 +58,25 @@ function RenderComments({comments}) {
 	return <div />;
 }
 
-function CampsiteInfo (props) {
+function CampsiteInfo(props) {
 	if (props.campsite) {
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col">
+			<div className='container'>
+				<div className='row'>
+					<div className='col'>
 						<Breadcrumb>
-                            <BreadcrumbItem><Link to="/directory">Directory</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>{props.campsite.name}</BreadcrumbItem>
-                        </Breadcrumb>
-                        <h2>{props.campsite.name}</h2>
-                        <hr />
+							<BreadcrumbItem>
+								<Link to='/directory'>Directory</Link>
+							</BreadcrumbItem>
+							<BreadcrumbItem active>{props.campsite.name}</BreadcrumbItem>
+						</Breadcrumb>
+						<h2>{props.campsite.name}</h2>
+						<hr />
 					</div>
 				</div>
 				<div className='row'>
 					<RenderCampsite campsite={props.campsite} />
-					<RenderComments comments ={props.comments} />
+					<RenderComments comments={props.comments} />
 				</div>
 			</div>
 		);
@@ -70,107 +84,135 @@ function CampsiteInfo (props) {
 	return <div />;
 }
 
-const required = val => val && val.length;
-const maxLength = len => val => !val || (val.length <= len);
-const minLength = len => val => val && (val.length >= len);
+// AMY INSTRUCTOR: delete required(). not necessary.
+const required = (val) => val && val.length;
+
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+
+// AMY INSTRUCTOR: delete rating, author, and text from the state object.
+// not necessary because react-redux-form is managing the form.
 
 class CommentForm extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { 
-			rating: '',
-			author: '',
-			text: '',
-			isModalOpen: false
+		this.state = {
+			rating: "",
+			author: "",
+			text: "",
+			isModalOpen: false,
 		};
+
 		this.toggleModal = this.toggleModal.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	toggleModal() {
-        this.setState({
-            isModalOpen: !this.state.isModalOpen
-        });
+		this.setState({
+			isModalOpen: !this.state.isModalOpen,
+		});
 	}
 
 	handleSubmit(values) {
-        console.log('Current state is: ' + JSON.stringify(values));
-        alert('Current state is: ' + JSON.stringify(values));
+		console.log("Current state is: " + JSON.stringify(values));
+		alert("Current state is: " + JSON.stringify(values));
 	}
-	
-	validate(author) {
 
-        const errors = {
-            author: ''
+	// AMY INSTRUCTOR: delete validate() function.
+	// not necessary because react-redux-form is managing the form.
+	validate(author) {
+		const errors = {
+			author: "",
 		};
 
-		if (author.length < 2 ) {
-			errors.author = 'Your name must be at least 2 characters.';
+		if (author.length < 2) {
+			errors.author = "Your name must be at least 2 characters.";
 		} else if (author.length > 15) {
-			errors.author = 'Your name must be 15 or less characters.';
-		}		
+			errors.author = "Your name must be 15 or less characters.";
+		}
 		return errors;
 	}
-	
-		render() {
-			const errors = this.validate(this.state.author);
 
-			return (
-				<React.Fragment>
-					<Button outline onClick={this.toggleModal}>
-                        <i className="fa fa-pencil fa-lg" /> Submit Comment
-                    </Button>
-					<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-						<ModalHeader isOpen={this.state.isModalOpen} toggle={this.toggleModal}>Submit Comment</ModalHeader>
-						<ModalBody>
-							<LocalForm onSubmit={values => this.handleSubmit(values)}>
-								<div className="form-group">
-									<Label htmlFor="rating">Rating</Label>
-										<Control.select model=".rating" id="rating" name="rating"
-												placeholder="1"
-												className="form-control" >
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-										</Control.select>
-								</div>
-								<div className="form-group">
-									<Label htmlFor="author">Your Name</Label>
-										<Control.text model=".author" id="author" name="author"
-												placeholder="Your Name"
-												className="form-control" 
-												validators={{
-													minLength: minLength(2),
-													maxLength: maxLength(15)
-												}}
-										/>
-										<Errors
-											className="text-danger"
-											model=".author"
-											component="div"
-											messages={{
-												minLength: 'Must be at least 2 characters',
-												maxLength: 'Must be 15 characters or less'
-											}}
-										/>
-								</div>
-								<div className="form-group">
-									<Label htmlFor="text">Comment</Label>
-										<Control.textarea model=".text" id="text" name="text" rows="6" className="form-control" />
-								</div>
-								<div className="form-group">
-									<Button type="submit" color="primary">Submit</Button>
-								</div>
-							</LocalForm>
-						</ModalBody>
-					</Modal>
-				</React.Fragment>
-			);
-		}		
+	render() {
+		// AMY INSTRUCTOR: delete errors.
+		// not necessary because react-redux-form is managing the form.
+		const errors = this.validate(this.state.author);
+
+		return (
+			<React.Fragment>
+				<Button outline onClick={this.toggleModal}>
+					<i className='fa fa-pencil fa-lg' /> Submit Comment
+				</Button>
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+					{/* AMY INSTRUCTOR: delete isOpen. Only the Modal requires it. */}
+					<ModalHeader
+						isOpen={this.state.isModalOpen}
+						toggle={this.toggleModal}>
+						Submit Comment
+					</ModalHeader>
+
+					<ModalBody>
+						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+							<div className='form-group'>
+								<Label htmlFor='rating'>Rating</Label>
+								<Control.select
+									model='.rating'
+									id='rating'
+									name='rating'
+									placeholder='1'
+									className='form-control'>
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+									<option>4</option>
+									<option>5</option>
+								</Control.select>
+							</div>
+							<div className='form-group'>
+								<Label htmlFor='author'>Your Name</Label>
+								<Control.text
+									model='.author'
+									id='author'
+									name='author'
+									placeholder='Your Name'
+									className='form-control'
+									validators={{
+										minLength: minLength(2),
+										maxLength: maxLength(15),
+									}}
+								/>
+								<Errors
+									className='text-danger'
+									model='.author'
+									component='div'
+									messages={{
+										minLength: "Must be at least 2 characters",
+										maxLength: "Must be 15 characters or less",
+									}}
+								/>
+							</div>
+							<div className='form-group'>
+								<Label htmlFor='text'>Comment</Label>
+								<Control.textarea
+									model='.text'
+									id='text'
+									name='text'
+									rows='6'
+									className='form-control'
+								/>
+							</div>
+							<div className='form-group'>
+								<Button type='submit' color='primary'>
+									Submit
+								</Button>
+							</div>
+						</LocalForm>
+					</ModalBody>
+				</Modal>
+			</React.Fragment>
+		);
 	}
-
+}
 
 export default CampsiteInfo;
