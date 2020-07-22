@@ -14,19 +14,20 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { Loading } from './LoadingComponent';
 
 function RenderCampsite({ campsite }) {
-	return (
-		<div className='col-md-5 m-1'>
-			<Card>
-				<CardImg top src={campsite.image} alt={campsite.name} />
-				<CardBody>
-					<CardText>{campsite.description}</CardText>
-				</CardBody>
-			</Card>
-		</div>
-	);
-}
+		return (
+			<div className='col-md-5 m-1'>
+				<Card>
+					<CardImg top src={campsite.image} alt={campsite.name} />
+					<CardBody>
+						<CardText>{campsite.description}</CardText>
+					</CardBody>
+				</Card>
+			</div>
+		);
+	}
 
 function RenderComments({ comments, addComment, campsiteId }) {
 	if (comments)
@@ -59,6 +60,26 @@ function RenderComments({ comments, addComment, campsiteId }) {
 }
 
 function CampsiteInfo(props) {
+	if (props.isLoading) {
+		return (
+			<div className="container">
+				<div className="row">
+					<Loading />
+				</div>
+			</div>
+		);
+	}
+	if (props.errMess) {
+		return (
+			<div className="container">
+				<div className="row">
+					<div className="col">
+						<h4>{props.errMess}</h4>
+					</div>
+				</div>
+			</div>
+		);
+	}
 	if (props.campsite) {
 		return (
 			<div className='container'>
