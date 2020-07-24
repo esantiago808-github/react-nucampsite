@@ -39,6 +39,13 @@ h2 {
 
 .navbar-dark {
   background-color: #901CAD;
+  animation-name: example;
+  animation-duration: 5s;
+}
+
+@keyframes example {
+  from {background-color: #5637DD;}
+  to {background-color: #60106B; }
 }
 
 .page-enter {
@@ -60,3 +67,4 @@ h2 {
   transform: translateX(0%);
   transition: 300ms ease-out;
 }
+

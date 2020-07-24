@@ -1,5 +1,6 @@
 import React, { Component }  from 'react';
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label } from 'reactstrap';
+import { FadeTransform } from 'react-animation-components';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -42,8 +43,14 @@ class Header extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col">
+                            <FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(50%)'
+            }}>
                                 <h1>NuCamp</h1>
                                 <h2>a better way to camp</h2> 
+                                </FadeTransform>
                             </div>
                         </div>
                     </div>
