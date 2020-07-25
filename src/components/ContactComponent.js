@@ -80,8 +80,10 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
+
+        this.props.postFeedback(values);
+
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
     }
 
@@ -258,7 +260,7 @@ class Contact extends Component {
                 </div>
             </div>
         );
-    }
+    };
 }
 
 export default Contact;
